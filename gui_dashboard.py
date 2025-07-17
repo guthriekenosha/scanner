@@ -58,21 +58,49 @@ st.set_page_config(layout="wide")
 # Auto-refresh every 60 seconds
 st_autorefresh(interval=60000, key="refresh")
 
-if "cycle_index" not in st.session_state:
-    st.session_state.cycle_index = 0
-log_file = "signal_log.csv"
-if not os.path.exists(log_file):
-    st.warning("No signal log found yet.")
-    st.stop()
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 
-df = pd.read_csv(log_file)
-if df["timestamp"].dtype == "int64" or df["timestamp"].dtype == "float64":
-    df["timestamp"] = pd.to_datetime(df["timestamp"], unit="s", utc=True).dt.tz_convert("US/Central")
-else:
-    df["timestamp"] = pd.to_datetime(df["timestamp"], utc=True).dt.tz_convert("US/Central")
-df = df.sort_values(by="timestamp", ascending=False)
+# Load Google Sheet
+scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+creds = ServiceAccountCredentials.from_json_keyfile_name("your_service_account.json", scope)
+client = gspread.authorize(creds)
+today_str = datetime.now().strftime("Signal Log %Y-%m-%d")
+try:
+    sheet = client.open(today_str).sheet1
+except Exception as e:
+    st.warning(f"⚠️ Could not find today's sheet ({today_str}). Attempting to load most recent sheet...")
+    try:
+        # Get all spreadsheets accessible by the service account
+        sheet_titles = [f.title for f in client.list_spreadsheet_files()]
+        sorted_titles = sorted([s for s in sheet_titles if s.startswith("Signal Log")], reverse=True)
+        if not sorted_titles:
+            st.error("❌ No Signal Log sheets found.")
+            st.stop()
+        most_recent = sorted_titles[0]
+        sheet = client.open(most_recent).sheet1
+        st.success(f"✅ Loaded fallback sheet: {most_recent}")
+    except Exception as inner_e:
+        st.error(f"❌ Failed to load fallback sheet: {inner_e}")
+        st.stop()
+data = sheet.get_all_records()
+df = pd.DataFrame(data)
+
+df["timestamp"] = pd.to_datetime(df["timestamp"]).dt.tz_localize("US/Central")
 
 st.sidebar.title("🔍 Filters")
+
+st.sidebar.markdown("### 📅 Date Filter")
+min_date = st.sidebar.date_input("Start Date", value=pd.to_datetime("today") - pd.Timedelta(days=3))
+max_date = st.sidebar.date_input("End Date", value=pd.to_datetime("today"))
+# Add toggle for Today's signals only
+today_only = st.sidebar.checkbox("📅 Only Show Today's Signals", value=True)
+if today_only:
+    min_date = max_date = pd.to_datetime("today")
+
+df["timestamp"] = pd.to_datetime(df["timestamp"], utc=True).dt.tz_convert("US/Central")
+df = df[(df["timestamp"].dt.date >= min_date) & (df["timestamp"].dt.date <= max_date)]
+
 min_score = st.sidebar.slider("Minimum Confidence Score", 0, 10, 4)
 
 # Optional: Signal expiration override slider
