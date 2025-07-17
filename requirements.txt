@@ -6,3 +6,5 @@ plotly
 requests
 pytz
 streamlit-autorefresh
+gspread
+google-auth
