@@ -63,7 +63,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 # Load Google Sheet
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("your_service_account.json", scope)
+creds = ServiceAccountCredentials.from_json_keyfile_name(".streamlit/service_account.json", scope)
 client = gspread.authorize(creds)
 today_str = datetime.now().strftime("Signal Log %Y-%m-%d")
 try:
@@ -156,6 +156,9 @@ now = pd.Timestamp.now(tz="UTC").astimezone(central)
 # Sidebar override for expiration
 # if expire_minutes < 240:
 #     filtered = filtered[now - filtered["timestamp"] <= pd.Timedelta(minutes=expire_minutes)]
+
+if "cycle_index" not in st.session_state:
+    st.session_state.cycle_index = 0
 
 if "All" not in selected_setup:
     filtered = filtered[filtered["setup_type_badge"].isin(selected_setup)]
