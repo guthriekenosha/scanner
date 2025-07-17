@@ -1,0 +1,92 @@
+timestamp,symbol,timeframe,type,price,rsi,ema21,ema50,score,price_from_breakout,ema_alignment,signal_age,log_type,notes,is_1m_hint
+0,CROSS-USDT,5m,long,0.23979,71.05,0.230953,0.227935,4,1.95,0.00126,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,CROSS-USDT,15m,long,0.23928,79.56,0.227996,0.226611,4,1.54,0.00163,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,CROSS-USDT,1h,long,0.23928,59.86,0.224255,0.209947,4,2.25,0.00237,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,DMC-USDT,5m,long,0.005018,67.46,0.004916,0.004886,4,-0.32,2e-05,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,DMC-USDT,15m,long,0.005004,63.37,0.004886,0.004854,3,-0.75,2e-05,0,valid,🟦 Anticipation: EMA trend + RSI > 60 + Volume Spike,False
+0,DMC-USDT,1h,long,0.005004,55.56,0.004847,0.004887,4,1.48,2e-05,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,ETHBTC-USDT,15m,long,0.028312,50.95,0.028304,0.02799,4,-0.17,1e-05,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,AGT-USDT,15m,long,0.006509,60.96,0.006482,0.006471,3,-0.82,1e-05,0,valid,🟦 Anticipation: EMA trend + RSI > 60 + Volume Spike,False
+0,JELLYJELLY-USDT,1h,long,0.023927,66.89,0.023585,0.023348,3,-1.0,4e-05,0,valid,🟦 Anticipation: EMA trend + RSI > 60 + Volume Spike,False
+0,AVAAI-USDT,15m,long,0.05496,69.39,0.053946,0.054205,3,-1.24,0.00021,0,valid,🟦 Anticipation: EMA trend + RSI > 60 + Volume Spike,False
+0,AVAAI-USDT,1h,long,0.05496,47.36,0.05397,0.051374,4,1.12,7e-05,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,1000CHEEMS-USDT,5m,long,0.0015252,63.75,0.00151,0.001486,3,-1.19,0.0,0,valid,🟦 Anticipation: EMA trend + RSI > 60 + Volume Spike,False
+0,1000CHEEMS-USDT,15m,long,0.001526,72.33,0.001482,0.001447,3,-1.3,1e-05,0,valid,🟦 Anticipation: EMA trend + RSI > 60 + Volume Spike,False
+0,1000CHEEMS-USDT,1h,long,0.001526,82.17,0.001429,0.001398,4,-0.05,2e-05,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,SWELL-USDT,5m,long,0.01281,66.67,0.012719,0.01276,4,0.47,0.0,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,SPX-USDT,5m,long,1.8128,68.3,1.805734,1.805086,4,-0.38,0.00099,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,SPX-USDT,1h,long,1.8128,47.9,1.777709,1.698157,4,-0.34,0.00519,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,DEEP-USDT,5m,long,0.1919,59.4,0.191083,0.190809,4,-0.35,0.00016,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,DEEP-USDT,15m,long,0.1919,60.53,0.191026,0.191252,3,-0.8,0.00024,0,valid,🟦 Anticipation: EMA trend + RSI > 60 + Volume Spike,False
+0,MOODENG-USDT,5m,long,0.21611,65.85,0.213292,0.209657,3,-0.74,0.00062,0,valid,🟦 Anticipation: EMA trend + RSI > 60 + Volume Spike,False
+0,MOODENG-USDT,1h,long,0.21604,69.76,0.203096,0.197978,4,1.37,0.0022,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,BLAST-USDT,15m,long,0.00261,69.3,0.002569,0.002531,4,-0.42,1e-05,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,MOBILE-USDT,5m,long,0.0004166,68.64,0.000417,0.000419,3,-1.07,0.0,0,valid,🟦 Anticipation: EMA trend + RSI > 60 + Volume Spike,False
+0,RARE-USDT,5m,long,0.06144,58.2,0.06144,0.061653,4,-0.18,0.0,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,XVG-USDT,5m,long,0.0066348,62.83,0.006623,0.006645,4,-0.07,0.0,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,RSR-USDT,5m,long,0.00867,64.65,0.008611,0.008628,4,0.12,1e-05,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,RSR-USDT,1h,long,0.00867,67.1,0.008477,0.008302,3,-1.5,3e-05,0,valid,🟦 Anticipation: EMA trend + RSI > 60 + Volume Spike,False
+0,MAV-USDT,5m,long,0.04908,65.83,0.048824,0.049104,4,-0.22,6e-05,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,LEVER-USDT,15m,long,0.0002186,57.62,0.000216,0.000216,4,-0.09,0.0,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,SHIB-USDT,5m,long,1.4482e-05,61.42,1.4e-05,1.4e-05,4,-0.08,0.0,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,XLM-USDT,5m,long,0.45476,68.92,0.45189,0.454188,4,0.5,0.00032,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,DOGE-USDT,5m,long,0.21352,60.12,0.213395,0.213547,4,-0.49,1e-05,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,TRX-USDT,5m,long,0.31032,66.53,0.309542,0.309072,4,-0.05,0.00018,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,TRX-USDT,15m,long,0.31032,57.08,0.30893,0.306955,4,-0.05,0.00031,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,TRX-USDT,1h,long,0.31032,80.23,0.305435,0.303112,4,-0.25,0.0008,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,CRV-USDT,1h,long,0.947,80.76,0.855654,0.795921,4,-0.37,0.01764,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,CROSS-USDT,5m,long,0.26031,83.13,0.237761,0.23165,4,3.43,0.00382,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,CROSS-USDT,15m,long,0.26031,88.01,0.233045,0.228961,4,3.43,0.00481,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,CROSS-USDT,1h,long,0.26031,68.33,0.228512,0.212381,4,3.43,0.00576,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,DMC-USDT,5m,long,0.005012,86.93,0.004953,0.00491,4,-0.4,1e-05,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,MYX-USDT,5m,long,0.07001,86.67,0.068171,0.068533,4,0.62,0.00033,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,MYX-USDT,15m,long,0.07001,52.22,0.068908,0.06975,4,0.62,0.00018,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,SOPH-USDT,5m,long,0.036183,64.64,0.036173,0.036221,4,-0.39,0.0,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,HUMA-USDT,5m,long,0.035863,50.88,0.035898,0.036047,4,-0.34,-0.0,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,FUN-USDT,5m,long,0.020195,46.81,0.020064,0.020003,4,0.14,2e-05,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,FUN-USDT,15m,long,0.020195,56.43,0.020019,0.020097,4,0.07,2e-05,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,JELLYJELLY-USDT,5m,long,0.023865,61.05,0.023861,0.023823,3,-0.7,1e-05,0,valid,🟦 Anticipation: EMA trend + RSI > 60 + Volume Spike,False
+0,ALU-USDT,5m,long,0.006683,67.08,0.006674,0.00676,4,-0.03,0.0,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,AVAAI-USDT,5m,long,0.05561,75.3,0.05464,0.054111,4,-0.43,0.00016,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,AVAAI-USDT,15m,long,0.05572,72.75,0.054225,0.054311,4,-0.23,0.00026,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,AVAAI-USDT,1h,long,0.05572,50.48,0.054148,0.051555,4,-0.23,0.00028,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,PENGU-USDT,5m,long,0.031425,74.43,0.031309,0.031385,4,0.37,1e-05,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,SPX-USDT,5m,long,1.8049,61.42,1.807659,1.806118,3,-1.06,0.0,0,valid,🟦 Anticipation: EMA trend + RSI > 60 + Volume Spike,False
+0,DEEP-USDT,5m,long,0.19161,67.51,0.191459,0.191029,3,-0.87,8e-05,0,valid,🟦 Anticipation: EMA trend + RSI > 60 + Volume Spike,False
+0,ZBCN-USDT,5m,long,0.0030872,64.19,0.003088,0.003092,4,-0.44,0.0,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,RARE-USDT,5m,long,0.06186,71.82,0.0616,0.061697,3,-0.82,9e-05,0,valid,🟦 Anticipation: EMA trend + RSI > 60 + Volume Spike,False
+0,1000BTT-USDT,5m,long,0.0006935,82.69,0.000693,0.000695,4,-0.09,0.0,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,RSR-USDT,5m,long,0.00857,60.1,0.008616,0.008628,3,-1.4,-0.0,0,valid,🟦 Anticipation: EMA trend + RSI > 60 + Volume Spike,False
+0,MAV-USDT,5m,long,0.04953,76.38,0.048974,0.049131,4,0.28,0.0001,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,MAV-USDT,15m,long,0.04953,54.81,0.049244,0.049237,4,0.28,4e-05,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,MAV-USDT,1h,long,0.04953,60.49,0.048752,0.047331,4,0.28,0.00015,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,SPELL-USDT,5m,long,0.0005333,60.74,0.000535,0.000537,3,-0.69,-0.0,0,valid,🟦 Anticipation: EMA trend + RSI > 60 + Volume Spike,False
+0,SHIB-USDT,5m,long,1.4422e-05,63.9,1.4e-05,1.4e-05,3,-0.77,0.0,0,valid,🟦 Anticipation: EMA trend + RSI > 60 + Volume Spike,False
+0,XLM-USDT,5m,long,0.45361,69.19,0.452542,0.454146,4,-0.33,0.00037,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,XRP-USDT,5m,long,3.0465,75.37,3.03987,3.043782,4,-0.21,0.00166,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,TRX-USDT,5m,long,0.31035,92.38,0.309752,0.309223,4,-0.03,0.00013,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,TRX-USDT,15m,long,0.31035,52.69,0.309065,0.307092,4,-0.05,0.00027,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,TRX-USDT,1h,long,0.31035,79.09,0.305889,0.303401,4,-0.05,0.00094,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,ALGO-USDT,5m,long,0.2822,69.05,0.282078,0.28345,4,-0.46,0.00015,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,CROSS-USDT,15m,long,0.25462,86.49,0.232528,0.228737,4,1.17,0.00429,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,CROSS-USDT,1h,long,0.25462,66.16,0.227995,0.212157,4,1.17,0.00524,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,DMC-USDT,5m,long,0.00503,87.41,0.004961,0.004915,4,-0.04,1e-05,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,DMC-USDT,15m,long,0.005037,74.2,0.00491,0.004867,3,-0.85,2e-05,0,valid,🟦 Anticipation: EMA trend + RSI > 60 + Volume Spike,False
+0,MYX-USDT,5m,long,0.07093,87.92,0.068458,0.068643,4,0.7,0.00047,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,MYX-USDT,15m,long,0.07103,57.43,0.069001,0.06979,4,2.08,0.00027,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,FUN-USDT,5m,long,0.020242,48.11,0.020086,0.020016,4,-0.15,4e-05,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,FUN-USDT,15m,long,0.020292,58.25,0.020028,0.020101,4,0.56,3e-05,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,ALU-USDT,5m,long,0.006803,74.76,0.006688,0.006762,4,1.36,2e-05,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,ALU-USDT,1h,long,0.00688,58.68,0.00658,0.006201,4,-0.49,4e-05,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,AVAAI-USDT,15m,long,0.05563,72.4,0.054217,0.054307,4,-0.39,0.00025,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,MEW-USDT,15m,long,0.003952,67.12,0.003839,0.003699,4,-0.18,2e-05,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,MAV-USDT,5m,long,0.04979,77.34,0.049124,0.049186,4,-0.18,0.00015,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,MAV-USDT,15m,long,0.04979,57.66,0.049268,0.049247,4,0.81,7e-05,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,MAV-USDT,1h,long,0.04979,61.61,0.048776,0.047341,4,0.81,0.00017,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,LEVER-USDT,5m,long,0.0002196,59.49,0.000217,0.000216,4,-0.41,0.0,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,LEVER-USDT,15m,long,0.0002196,61.36,0.000217,0.000216,3,-1.66,0.0,0,valid,🟦 Anticipation: EMA trend + RSI > 60 + Volume Spike,False
+0,TRX-USDT,5m,long,0.31036,84.82,0.309852,0.30931,4,-0.04,0.0001,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,TRX-USDT,15m,long,0.31036,52.74,0.309066,0.307092,4,-0.05,0.00028,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,TRX-USDT,1h,long,0.31031,78.89,0.305885,0.303399,4,-0.06,0.00094,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,C-USDT,5m,long,0.14609,71.2,0.137459,0.142155,4,1.8,0.0015,0,valid,🟢 Confirmation: Breakout + EMA trend + RSI > 45,False
+0,CROSS-USDT,1h,long,0.247,61.47,0.227302,0.211858,3,-1.86,0.00455,0,valid,🟦 Anticipation: EMA trend + RSI > 60 + Volume Spike,False
