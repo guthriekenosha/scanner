@@ -89,14 +89,17 @@ df = pd.DataFrame(data)
 
 st.sidebar.title("🔍 Filters")
 
-# Sidebar control for last N days
-n_days = st.sidebar.slider("Show signals from the last N days", min_value=1, max_value=30, value=3)
-
-# Convert timestamp column and filter by last N days
 df["timestamp"] = pd.to_datetime(df["timestamp"], utc=True).dt.tz_convert("US/Eastern")
-cutoff_date = pd.Timestamp.now(tz="US/Eastern").date() - pd.Timedelta(days=n_days - 1)
-
-df = df[df["timestamp"].dt.date >= cutoff_date]
+# Sidebar date pickers for filtering by date range
+start_date = st.sidebar.date_input(
+    "Start Date",
+    value=pd.Timestamp.now(tz="US/Eastern").date() - pd.Timedelta(days=3)
+)
+end_date = st.sidebar.date_input(
+    "End Date",
+    value=pd.Timestamp.now(tz="US/Eastern").date()
+)
+df = df[(df["timestamp"].dt.date >= start_date) & (df["timestamp"].dt.date <= end_date)]
 
 min_score = st.sidebar.slider("Minimum Confidence Score", 0, 10, 4)
 
