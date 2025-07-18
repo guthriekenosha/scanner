@@ -245,6 +245,13 @@ filtered["tp1"] = breakout_level + (filtered["price"] - breakout_level) * 2
 filtered["tp2"] = breakout_level + (filtered["price"] - breakout_level) * 3
 filtered["tp3"] = breakout_level + (filtered["price"] - breakout_level) * 5
 
+# Add bounce-related fields
+filtered["bottom_bounce_score"] = filtered.get("bottom_bounce_score", 0)
+filtered["rsi_bounce_signal"] = filtered.get("rsi_bounce_signal", False)
+filtered["ema_reclaim"] = filtered.get("ema_reclaim", False)
+filtered["simulated_bounce_pnl"] = filtered.get("simulated_bounce_pnl", 0.0)
+filtered["confidence_stars"] = filtered.get("confidence_stars", "")
+
 # Adjust display of signal_mode badges to match new logic
 def display_signal_mode_badge(mode):
     if mode == "🟢 Confirmation":
@@ -260,7 +267,8 @@ styled_table = filtered[[
     "timestamp", "symbol", "timeframe", "type_icon", "setup_type_badge", "trend",
     "signal_mode",  # 👈 Add this here
     "price", "price_from_breakout", "price_change_pct", "tp1", "tp2", "tp3",
-    "rsi", "ema21", "ema50", "score", "stars", "signal_age", "notes"
+    "rsi", "ema21", "ema50", "bottom_bounce_score", "rsi_bounce_signal", "ema_reclaim",
+    "simulated_bounce_pnl", "confidence_stars", "score", "stars", "signal_age", "notes"
 ]].style.background_gradient(subset=["score"], cmap="Reds") \
   .applymap(lambda x: "color: red;" if isinstance(x, str) and "RSI" in x else "", subset=["notes"]) \
   .applymap(lambda x: "color: green;" if isinstance(x, str) and "Breakout" in x else "", subset=["setup_type_badge"]) \
@@ -352,4 +360,3 @@ for _, row in filtered.iterrows():
 
 if st.button("🔄 Refresh Now"):
     st.rerun()
-  
