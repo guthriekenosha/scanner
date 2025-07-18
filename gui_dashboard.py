@@ -87,20 +87,16 @@ except Exception as e:
 data = sheet.get_all_records()
 df = pd.DataFrame(data)
 
-df["timestamp"] = pd.to_datetime(df["timestamp"]).dt.tz_localize("US/Central")
-
 st.sidebar.title("🔍 Filters")
 
-st.sidebar.markdown("### 📅 Date Filter")
-min_date = st.sidebar.date_input("Start Date", value=pd.to_datetime("today") - pd.Timedelta(days=3))
-max_date = st.sidebar.date_input("End Date", value=pd.to_datetime("today"))
-# Add toggle for Today's signals only
-today_only = st.sidebar.checkbox("📅 Only Show Today's Signals", value=True)
-if today_only:
-    min_date = max_date = pd.to_datetime("today")
+# Sidebar control for last N days
+n_days = st.sidebar.slider("Show signals from the last N days", min_value=1, max_value=30, value=3)
 
-df["timestamp"] = pd.to_datetime(df["timestamp"], utc=True).dt.tz_convert("US/Central")
-df = df[(df["timestamp"].dt.date >= min_date) & (df["timestamp"].dt.date <= max_date)]
+# Convert timestamp column and filter by last N days
+df["timestamp"] = pd.to_datetime(df["timestamp"], utc=True).dt.tz_convert("US/Eastern")
+cutoff_date = pd.Timestamp.now(tz="US/Eastern").date() - pd.Timedelta(days=n_days - 1)
+
+df = df[df["timestamp"].dt.date >= cutoff_date]
 
 min_score = st.sidebar.slider("Minimum Confidence Score", 0, 10, 4)
 
