@@ -353,3 +353,11 @@ for _, row in filtered.iterrows():
 
 if st.button("🔄 Refresh Now"):
     st.rerun()
+     gui_dashboard.py
+    signal_log.csv
+    git add .streamlit/conifg.toml 
+    gui_dashboard.py
+    signal_log.csv
+git add .streamlit/conifg.toml    
+git commit -m "Dashboard changes"
+git push
