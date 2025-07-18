@@ -352,3 +352,5 @@ for _, row in filtered.iterrows():
         st.info(f"🔻 RSI oversold on {row['symbol']} ({row['timeframe']}) — RSI: {row['rsi']:.2f}")
 
 if st.button("🔄 Refresh Now"):
+    st.rerun()
+  
