@@ -105,9 +105,9 @@ end_date = st.sidebar.date_input(
     "End Date",
     value=pd.Timestamp.now(tz="US/Eastern").date()
 )
-start_date = pd.to_datetime(start_date).normalize()
-end_date = pd.to_datetime(end_date).normalize()
-df["timestamp"] = pd.to_datetime(df["timestamp"])
+start_date = pd.to_datetime(start_date).tz_localize("US/Eastern").normalize()
+end_date = pd.to_datetime(end_date).tz_localize("US/Eastern").normalize()
+df["timestamp"] = pd.to_datetime(df["timestamp"]).dt.tz_localize("US/Eastern", ambiguous='NaT', nonexistent='NaT')
 df = df[(df["timestamp"].dt.normalize() >= start_date) & (df["timestamp"].dt.normalize() <= end_date)]
 
 min_score = st.sidebar.slider("Minimum Confidence Score", 0, 10, 4)
