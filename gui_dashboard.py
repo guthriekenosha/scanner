@@ -109,6 +109,10 @@ expire_minutes = st.sidebar.slider("⏳ Max Signal Age (minutes)", 5, 240, 60)
 current = df.drop_duplicates(subset=["symbol", "timeframe"], keep="first")
 filtered = current[current["score"] >= min_score]
 
+# Remove signals older than expire_minutes
+now = pd.Timestamp.now(tz="UTC").astimezone(pytz.timezone("US/Eastern"))
+filtered = filtered[(now - filtered["timestamp"]) <= pd.Timedelta(minutes=expire_minutes)]
+
 # Add trend column before filtering trends
 filtered.loc[:, "trend"] = np.where(filtered["ema21"] > filtered["ema50"], "📈 Uptrend", "📉 Downtrend")
 
@@ -153,7 +157,7 @@ st.sidebar.bar_chart(top_symbols)
 central = pytz.timezone("US/Central")
 now = pd.Timestamp.now(tz="UTC").astimezone(central)
 
-# Sidebar override for expiration
+# Sidebar override for expiration (obsolete, now handled above)
 # if expire_minutes < 240:
 #     filtered = filtered[now - filtered["timestamp"] <= pd.Timedelta(minutes=expire_minutes)]
 
