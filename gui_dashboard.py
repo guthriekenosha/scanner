@@ -99,8 +99,6 @@ end_date = st.sidebar.date_input(
     "End Date",
     value=pd.Timestamp.now(tz="US/Eastern").date()
 )
-# start_date and end_date are already datetime.date objects
-# Ensure valid comparison types for date filtering
 start_date = pd.to_datetime(start_date).normalize()
 end_date = pd.to_datetime(end_date).normalize()
 df["timestamp"] = pd.to_datetime(df["timestamp"])
