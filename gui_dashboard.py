@@ -95,7 +95,6 @@ df = pd.DataFrame(data)
 
 st.sidebar.title("🔍 Filters")
 
-df["timestamp"] = pd.to_datetime(df["timestamp"], utc=True).dt.tz_convert("US/Eastern")
 # Sidebar date pickers for filtering by date range
 start_date = st.sidebar.date_input(
     "Start Date",
@@ -107,7 +106,11 @@ end_date = st.sidebar.date_input(
 )
 start_date = pd.to_datetime(start_date).tz_localize("US/Eastern").normalize()
 end_date = pd.to_datetime(end_date).tz_localize("US/Eastern").normalize()
-df["timestamp"] = pd.to_datetime(df["timestamp"]).dt.tz_localize("US/Eastern", ambiguous='NaT', nonexistent='NaT')
+df["timestamp"] = pd.to_datetime(df["timestamp"])
+if df["timestamp"].dt.tz is None:
+    df["timestamp"] = df["timestamp"].dt.tz_localize("US/Eastern")
+else:
+    df["timestamp"] = df["timestamp"].dt.tz_convert("US/Eastern")
 df = df[(df["timestamp"].dt.normalize() >= start_date) & (df["timestamp"].dt.normalize() <= end_date)]
 
 min_score = st.sidebar.slider("Minimum Confidence Score", 0, 10, 4)
@@ -231,7 +234,7 @@ st.markdown("### 🧠 Signal Summary")
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("📊 Total Signals", len(df))
 col2.metric("🟢 Current Displayed", len(filtered))
-col3.metric("⏱️ Latest Signal (CST)", df['timestamp'].max().strftime("%H:%M:%S"))
+col3.metric("⏱️ Latest Signal (CST)", df['timestamp'].max().astimezone(pytz.timezone("US/Central")).strftime("%H:%M:%S"))
 col4.metric("⚡ Top Symbol", df['symbol'].mode()[0] if not df['symbol'].empty else "N/A")
 
 st.markdown(f"### Current Signals ({len(filtered)} displayed)")
