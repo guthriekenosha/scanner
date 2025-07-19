@@ -100,7 +100,11 @@ end_date = st.sidebar.date_input(
     value=pd.Timestamp.now(tz="US/Eastern").date()
 )
 # start_date and end_date are already datetime.date objects
-df = df[(df["timestamp"] >= pd.to_datetime(start_date)) & (df["timestamp"] <= pd.to_datetime(end_date))]
+# Ensure valid comparison types for date filtering
+start_date = pd.to_datetime(start_date).normalize()
+end_date = pd.to_datetime(end_date).normalize()
+df["timestamp"] = pd.to_datetime(df["timestamp"])
+df = df[(df["timestamp"].dt.normalize() >= start_date) & (df["timestamp"].dt.normalize() <= end_date)]
 
 min_score = st.sidebar.slider("Minimum Confidence Score", 0, 10, 4)
 
