@@ -10,7 +10,7 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import pytz
-from signal_engine import load_skipped_signals
+
 
 def format_signal_age(delta):
     total_minutes = int(delta.total_seconds() // 60)
@@ -79,7 +79,9 @@ import gspread
 from google.oauth2.service_account import Credentials
 
 import json
-from utils import load_skipped_signals
+import sys, os
+sys.path.append(os.path.abspath(".."))
+from signal_engine import load_skipped_signals
 
 # Remove stale signals from CSV before loading dashboard data
 signal_log_path = "signal_log.csv"
