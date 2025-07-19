@@ -10,6 +10,11 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import pytz
+def format_signal_age(delta):
+    total_minutes = int(delta.total_seconds() // 60)
+    hours = total_minutes // 60
+    minutes = total_minutes % 60
+    return f"{hours}h {minutes}m"
 st.markdown(
     "<style> .css-18e3th9 { padding-top: 1rem; } .block-container { padding-top: 1rem; } </style>",
     unsafe_allow_html=True
@@ -80,7 +85,7 @@ clean_old_signals(signal_log_path)
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 creds = Credentials.from_service_account_info(json.loads(os.environ["GOOGLE_CREDS_JSON"]), scopes=scope)
 client = gspread.authorize(creds)
-today_str = datetime.now().strftime("Signal Log %Y-%m-%d")
+today_str = datetime.now(pytz.timezone("America/New_York")).strftime("Signal Log %Y-%m-%d")
 try:
     sheet = client.open(today_str).sheet1
 except Exception as e:
@@ -102,7 +107,7 @@ data = sheet.get_all_records()
 for row in data:
     if "timestamp" in row and isinstance(row["timestamp"], str):
         try:
-            row["timestamp"] = datetime.fromisoformat(row["timestamp"])
+            row["timestamp"] = pd.to_datetime(row["timestamp"])
         except Exception:
             row["timestamp"] = pd.Timestamp.now()
 df = pd.DataFrame(data)
@@ -136,7 +141,7 @@ current = df.drop_duplicates(subset=["symbol", "timeframe"], keep="first")
 filtered = current[current["score"] >= min_score]
 
 # Remove signals older than expire_minutes
-now = pd.Timestamp.now(tz="UTC").astimezone(pytz.timezone("US/Eastern"))
+now = datetime.now(pytz.timezone("America/New_York"))
 filtered = filtered[(now - filtered["timestamp"]) <= pd.Timedelta(minutes=expire_minutes)]
 
 # Add trend column before filtering trends
@@ -214,16 +219,17 @@ else:
 filtered["stars"] = filtered["score"].apply(lambda s: "⭐" * int(s))
 
 # Optionally highlight signals about to expire
-filtered["age_minutes"] = (now - filtered["timestamp"]).dt.total_seconds() / 60
-filtered["age_minutes"] = filtered["age_minutes"].astype(int)
+def safe_signal_age(row):
+    delta = now - pd.to_datetime(row['timestamp'])
+    if delta.total_seconds() > 0:
+        return format_signal_age(delta)
+    else:
+        return "0m"
+
+filtered["signal_age"] = filtered.apply(safe_signal_age, axis=1)
+
+filtered["age_minutes"] = filtered.apply(lambda row: int((now - pd.to_datetime(row['timestamp'])).total_seconds() // 60) if (now - pd.to_datetime(row['timestamp'])).total_seconds() > 0 else 0, axis=1)
 filtered["expires_soon"] = filtered["age_minutes"] > (expire_minutes * 0.8)
-
-def format_duration(minutes):
-    hours = int(minutes) // 60
-    mins = int(minutes) % 60
-    return f"{hours}h {mins}m" if hours else f"{mins}m"
-
-filtered["signal_age"] = filtered["age_minutes"].apply(format_duration)
 
 # Added signal_mode column based on notes and price_from_breakout
 def determine_signal_mode(row):
