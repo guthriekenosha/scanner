@@ -10,6 +10,8 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import pytz
+from signal_engine import load_skipped_signals
+
 def format_signal_age(delta):
     total_minutes = int(delta.total_seconds() // 60)
     hours = total_minutes // 60
