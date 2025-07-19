@@ -77,6 +77,8 @@ import gspread
 from google.oauth2.service_account import Credentials
 
 import json
+from utils import load_skipped_signals
+
 # Remove stale signals from CSV before loading dashboard data
 signal_log_path = "signal_log.csv"
 clean_old_signals(signal_log_path)
@@ -112,6 +114,14 @@ for row in data:
             row["timestamp"] = pd.Timestamp.now()
 df = pd.DataFrame(data)
 
+# Load skipped signals if toggle is enabled
+if st.sidebar.checkbox("Show Skipped but High Potential Signals", value=False):
+    skipped_df = load_skipped_signals()
+    if not skipped_df.empty:
+        skipped_df["skipped"] = True
+        df["skipped"] = False
+        df = pd.concat([df, skipped_df], ignore_index=True)
+
 st.sidebar.title("🔍 Filters")
 
 # Sidebar date pickers for filtering by date range
@@ -132,6 +142,12 @@ else:
     df["timestamp"] = df["timestamp"].dt.tz_convert("US/Eastern")
 df = df[(df["timestamp"].dt.normalize() >= start_date) & (df["timestamp"].dt.normalize() <= end_date)]
 
+# For sorting skipped signals in table view
+if "skipped" in df.columns:
+    df["is_skipped_last"] = df["skipped"].fillna(False).astype(int)
+else:
+    df["is_skipped_last"] = 0
+
 min_score = st.sidebar.slider("Minimum Confidence Score", 0, 10, 4)
 
 # Optional: Signal expiration override slider
@@ -140,9 +156,12 @@ expire_minutes = st.sidebar.slider("⏳ Max Signal Age (minutes)", 5, 240, 60)
 current = df.drop_duplicates(subset=["symbol", "timeframe"], keep="first")
 filtered = current[current["score"] >= min_score]
 
-# Remove signals older than expire_minutes
 now = datetime.now(pytz.timezone("America/New_York"))
 filtered = filtered[(now - filtered["timestamp"]) <= pd.Timedelta(minutes=expire_minutes)]
+
+# Sort by is_skipped_last (skipped signals grouped) and timestamp (desc)
+if "is_skipped_last" in filtered.columns:
+    filtered = filtered.sort_values(by=["is_skipped_last", "timestamp"], ascending=[False, False])
 
 # Add trend column before filtering trends
 filtered.loc[:, "trend"] = np.where(filtered["ema21"] > filtered["ema50"], "📈 Uptrend", "📉 Downtrend")
@@ -262,6 +281,28 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
+# --- Skipped but High Potential Signals toggle ---
+def load_skipped_signals():
+    file_path = "skipped_signals.csv"
+    if os.path.exists(file_path):
+        try:
+            df = pd.read_csv(file_path)
+            if "timestamp" in df.columns:
+                df["timestamp"] = pd.to_datetime(df["timestamp"])
+            return df
+        except Exception:
+            return pd.DataFrame()
+    return pd.DataFrame()
+
+show_skipped = st.toggle("Show Skipped but High Potential Signals", value=False)
+if show_skipped:
+    skipped_df = load_skipped_signals()
+    st.markdown("### 🟡 Skipped but High Potential Signals")
+    if not skipped_df.empty:
+        st.dataframe(skipped_df)
+    else:
+        st.info("No skipped high potential signals found.")
+
 # Format bottom_bounce_score, rsi_bounce_signal, ema_reclaim, and support_sweep_reversal in df before display
 if 'bottom_bounce_score' in filtered.columns:
     filtered['bottom_bounce_score'] = filtered['bottom_bounce_score'].apply(lambda x: f"🟢 {x:.2f}" if not pd.isna(x) else '')
@@ -372,6 +413,9 @@ for row in rows_to_show:
     if row["signal_mode"] == "🟢 Confirmation":
         label += " ✅"
     with st.expander(label):
+        # Visual indicator for skipped signals
+        if row.get("skipped", False):
+            st.markdown("🟡 *Skipped but flagged for review*")
         candles = load_candles(row["symbol"], row["timeframe"])
         if candles is not None:
             fig = go.Figure()
