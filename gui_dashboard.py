@@ -58,10 +58,24 @@ st.set_page_config(layout="wide")
 # Auto-refresh every 60 seconds
 st_autorefresh(interval=60000, key="refresh")
 
+# --- Remove stale signals older than 24 hours from signal_log.csv if present ---
+def clean_old_signals(file_path):
+    if os.path.exists(file_path):
+        df = pd.read_csv(file_path)
+        df['timestamp'] = pd.to_datetime(df['timestamp'])
+        now = pd.Timestamp.now(tz='UTC')
+        df = df[df['timestamp'] > now - pd.Timedelta(hours=24)]
+        df.to_csv(file_path, index=False)
+
+
 import gspread
 from google.oauth2.service_account import Credentials
 
 import json
+# Remove stale signals from CSV before loading dashboard data
+signal_log_path = "signal_log.csv"
+clean_old_signals(signal_log_path)
+
 # Load Google Sheet
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 creds = Credentials.from_service_account_info(json.loads(os.environ["GOOGLE_CREDS_JSON"]), scopes=scope)
@@ -298,13 +312,45 @@ display_columns = [
     'bottom_bounce_score', 'rsi_bounce_signal', 'ema_reclaim', 'simulated_bounce_pnl', 'support_sweep_reversal'
 ]
 
+
+# --- Gradient coloring for signal_age ---
+import matplotlib.colors as mcolors
+
+def color_signal_age(val):
+    try:
+        # Parse string like "1h 30m", "45m", etc.
+        parts = val.split()
+        minutes = 0
+        for part in parts:
+            if "h" in part:
+                minutes += int(part.replace("h", "")) * 60
+            elif "m" in part:
+                minutes += int(part.replace("m", ""))
+        # Color logic: <60 green, <180 orange, else red
+        norm = mcolors.Normalize(vmin=0, vmax=240)
+        rgba = mcolors.to_rgba('green' if minutes < 60 else 'orange' if minutes < 180 else 'red', alpha=0.3)
+        return f"background-color: rgba({int(rgba[0]*255)}, {int(rgba[1]*255)}, {int(rgba[2]*255)}, {rgba[3]})"
+    except Exception:
+        return ""
+
 styled_table = filtered[display_columns].style.background_gradient(subset=["score"], cmap="Reds") \
   .applymap(lambda x: "color: red;" if isinstance(x, str) and "RSI" in x else "", subset=["notes"]) \
   .applymap(lambda x: "color: green;" if isinstance(x, str) and "Breakout" in x else "", subset=["setup_type_badge"]) \
   .applymap(lambda x: "color: blue;" if isinstance(x, str) and "Pullback" in x else "", subset=["setup_type_badge"]) \
-  .applymap(lambda x: "color: gray;" if isinstance(x, str) and "1m" in x else "", subset=["setup_type_badge"])
+  .applymap(lambda x: "color: gray;" if isinstance(x, str) and "1m" in x else "", subset=["setup_type_badge"]) \
+  .applymap(color_signal_age, subset=["signal_age"])
 
-st.dataframe(styled_table)
+# --- Group signals by setup_type_badge ---
+for setup_type in filtered['setup_type_badge'].unique():
+    st.subheader(f"📊 {setup_type} Setups")
+    subset = filtered[filtered['setup_type_badge'] == setup_type]
+    st.dataframe(subset[display_columns].style.background_gradient(subset=["score"], cmap="Reds")
+        .applymap(lambda x: "color: red;" if isinstance(x, str) and "RSI" in x else "", subset=["notes"])
+        .applymap(lambda x: "color: green;" if isinstance(x, str) and "Breakout" in x else "", subset=["setup_type_badge"])
+        .applymap(lambda x: "color: blue;" if isinstance(x, str) and "Pullback" in x else "", subset=["setup_type_badge"])
+        .applymap(lambda x: "color: gray;" if isinstance(x, str) and "1m" in x else "", subset=["setup_type_badge"])
+        .applymap(color_signal_age, subset=["signal_age"])
+    )
 
 st.markdown("### 📈 Live Candle Snapshots")
 
