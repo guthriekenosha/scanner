@@ -226,6 +226,13 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
+# Format bottom_bounce_score and support_sweep_reversal in df before display
+if 'bottom_bounce_score' in filtered.columns:
+    filtered['bottom_bounce_score'] = filtered['bottom_bounce_score'].apply(lambda x: f"🟢 {x:.2f}" if not pd.isna(x) else '')
+
+if 'support_sweep_reversal' in filtered.columns:
+    filtered['support_sweep_reversal'] = filtered['support_sweep_reversal'].apply(lambda x: '✅' if x else '❌')
+
 # Live price change % from most recent candle
 def get_live_price_change(row):
     candles = load_candles(row["symbol"], row["timeframe"])
@@ -264,14 +271,14 @@ def display_signal_mode_badge(mode):
 
 filtered["signal_mode"] = filtered["signal_mode"].apply(display_signal_mode_badge)
 
-styled_table = filtered[[
-    "timestamp", "symbol", "timeframe", "type_icon", "setup_type_badge", "trend",
-    "signal_mode",
-    "price", "price_from_breakout", "price_change_pct", "tp1", "tp2", "tp3",
-    "rsi", "ema21", "ema50", "bottom_bounce_score", "rsi_bounce_signal", "ema_reclaim",
-    "support_sweep_reversal", "simulated_bounce_pnl", "confidence_stars",
-    "score", "stars", "signal_age", "notes"
-]].style.background_gradient(subset=["score"], cmap="Reds") \
+display_columns = [
+    'timestamp', 'symbol', 'timeframe', 'type_icon', 'setup_type_badge',
+    'trend', 'signal_mode', 'price', 'price_from_breakout', 'price_change_pct',
+    'tp1', 'tp2', 'tp3', 'rsi', 'ema21', 'ema50', 'score', 'stars', 'signal_age',
+    'bottom_bounce_score', 'support_sweep_reversal', 'notes'
+]
+
+styled_table = filtered[display_columns].style.background_gradient(subset=["score"], cmap="Reds") \
   .applymap(lambda x: "color: red;" if isinstance(x, str) and "RSI" in x else "", subset=["notes"]) \
   .applymap(lambda x: "color: green;" if isinstance(x, str) and "Breakout" in x else "", subset=["setup_type_badge"]) \
   .applymap(lambda x: "color: blue;" if isinstance(x, str) and "Pullback" in x else "", subset=["setup_type_badge"]) \
