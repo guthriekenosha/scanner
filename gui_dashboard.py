@@ -278,7 +278,8 @@ display_columns = [
     'timestamp', 'symbol', 'timeframe', 'type_icon', 'setup_type_badge',
     'trend', 'signal_mode', 'price', 'price_from_breakout', 'price_change_pct',
     'tp1', 'tp2', 'tp3', 'rsi', 'ema21', 'ema50', 'score', 'stars', 'signal_age',
-    'bottom_bounce_score', 'rsi_bounce_signal', 'ema_reclaim', 'support_sweep_reversal', 'notes'
+    'notes',
+    'bottom_bounce_score', 'rsi_bounce_signal', 'ema_reclaim', 'simulated_bounce_pnl', 'support_sweep_reversal'
 ]
 
 styled_table = filtered[display_columns].style.background_gradient(subset=["score"], cmap="Reds") \
