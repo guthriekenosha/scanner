@@ -85,6 +85,12 @@ except Exception as e:
         st.error(f"❌ Failed to load fallback sheet: {inner_e}")
         st.stop()
 data = sheet.get_all_records()
+for row in data:
+    if "timestamp" in row and isinstance(row["timestamp"], str):
+        try:
+            row["timestamp"] = datetime.fromisoformat(row["timestamp"])
+        except Exception:
+            row["timestamp"] = pd.Timestamp.now()
 df = pd.DataFrame(data)
 
 st.sidebar.title("🔍 Filters")
