@@ -79,8 +79,8 @@ import gspread
 from google.oauth2.service_account import Credentials
 
 import json
-import sys, os
-sys.path.append(os.path.abspath(".."))
+import sys
+sys.path.append("..")
 from signal_engine import load_skipped_signals
 
 # Remove stale signals from CSV before loading dashboard data
