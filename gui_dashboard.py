@@ -226,10 +226,13 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-# Format bottom_bounce_score and support_sweep_reversal in df before display
+# Format bottom_bounce_score, rsi_bounce_signal, ema_reclaim, and support_sweep_reversal in df before display
 if 'bottom_bounce_score' in filtered.columns:
     filtered['bottom_bounce_score'] = filtered['bottom_bounce_score'].apply(lambda x: f"🟢 {x:.2f}" if not pd.isna(x) else '')
-
+if 'rsi_bounce_signal' in filtered.columns:
+    filtered['rsi_bounce_signal'] = filtered['rsi_bounce_signal'].apply(lambda x: '🔻' if x else '')
+if 'ema_reclaim' in filtered.columns:
+    filtered['ema_reclaim'] = filtered['ema_reclaim'].apply(lambda x: '📈' if x else '')
 if 'support_sweep_reversal' in filtered.columns:
     filtered['support_sweep_reversal'] = filtered['support_sweep_reversal'].apply(lambda x: '✅' if x else '❌')
 
@@ -275,7 +278,7 @@ display_columns = [
     'timestamp', 'symbol', 'timeframe', 'type_icon', 'setup_type_badge',
     'trend', 'signal_mode', 'price', 'price_from_breakout', 'price_change_pct',
     'tp1', 'tp2', 'tp3', 'rsi', 'ema21', 'ema50', 'score', 'stars', 'signal_age',
-    'bottom_bounce_score', 'support_sweep_reversal', 'notes'
+    'bottom_bounce_score', 'rsi_bounce_signal', 'ema_reclaim', 'support_sweep_reversal', 'notes'
 ]
 
 styled_table = filtered[display_columns].style.background_gradient(subset=["score"], cmap="Reds") \
